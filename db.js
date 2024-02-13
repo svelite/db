@@ -123,13 +123,13 @@ export const createAdapter = (token) => {
     let db = {}
 
     function read() {
-        const file = readFileSync('./data/' + token + '/data.json');
+        const file = readFileSync('./data/' + token + '/db.json');
         db = JSON.parse(file)
     }
     read()
 
     function write() {
-        writeFileSync('./data/' + token + '/data.json', JSON.stringify(db));
+        writeFileSync('./data/' + token + '/db.json', JSON.stringify(db));
     }
 
     let isDirty = false;
