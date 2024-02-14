@@ -12,7 +12,7 @@ export function createDb(adapter) {
 	return (collectionName) => {
 		return {
 			query({filters = [], page = 1, perPage= 0} = {}) {
-
+                
                 return adapter.query(collectionName, {
                     filters, 
                     pagination: {page, perPage}
@@ -20,6 +20,8 @@ export function createDb(adapter) {
 			},
 			async insert(data) {
                 data.id ??= getId();
+                data.createdAt = new Date().valueOf()
+                data.updatedAt = 0
                 const result = await adapter.insert(collectionName, data);
 				return result;
 			},
@@ -28,6 +30,7 @@ export function createDb(adapter) {
                 return true;
 			},
 			async update(id, data) {
+                data.updatedAt = new Date().valueOf()
 				const result = await adapter.update(collectionName, id, data);
                 return result
 			}
