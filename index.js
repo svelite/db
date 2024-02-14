@@ -30,7 +30,8 @@ app.post('/:token/:table/insert', (req, res) => {
     // validate token
     const {token, table} = req.params
     const data = req.body
-    
+    const db = createDb(createAdapter(token))
+
     const result = db(table).insert(data)
     
     return res.json(result)
@@ -40,7 +41,8 @@ app.post('/:token/:table/update', (req, res) => {
     // validate token
     const {token, table} = req.params
     const data = req.body
-    
+    const db = createDb(createAdapter(token))
+
     const result = db(table).update(data.id, data)
     
     return res.json(result)
@@ -50,7 +52,8 @@ app.post('/:token/:table/remove', (req, res) => {
     // validate token
     const {token, table} = req.params
     const {id} = req.body
-    
+    const db = createDb(createAdapter(token))
+
     const result = db(table).remove(id)
     
     return res.json(result)

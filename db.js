@@ -59,62 +59,60 @@ function applyFilters(items, filters) {
     }, items);
 }
 
-let db = {};
+// export const createAdapter1 = () => {
+//     return {
+//         insert(collection, data) {
+//             if (!db[collection]) {
+//                 db[collection] = [];
+//             }
+//             db[collection].push(data);
+//             return data;
+//         },
 
-export const createAdapter1 = () => {
-    return {
-        insert(collection, data) {
-            if (!db[collection]) {
-                db[collection] = [];
-            }
-            db[collection].push(data);
-            return data;
-        },
+//         query(collection, {pagination = {page: 1, perPage: 0}, filters = []}) {
+//             if (!db[collection]) {
+//                 return {data:[], total: 0, page: 1, perPage: 0};
+//             }
 
-        query(collection, {pagination = {page: 1, perPage: 0}, filters = []}) {
-            if (!db[collection]) {
-                return {data:[], total: 0, page: 1, perPage: 0};
-            }
+//             let items = applyFilters(db[collection], filters)
 
-            let items = applyFilters(db[collection], filters)
+//             return {
+//                 data: pagination.perPage === 0 ? items : items.slice(
+//                     (pagination.page - 1) * pagination.perPage,
+//                     pagination.page * pagination.perPage
+//                 ),
+//                 total: items.length,
+//                 page: pagination.page,
+//                 perPage: pagination.perPage === 0 ? items.length : Math.min(items.length, pagination.perPage)
+//             }
+//         },
 
-            return {
-                data: pagination.perPage === 0 ? items : items.slice(
-                    (pagination.page - 1) * pagination.perPage,
-                    pagination.page * pagination.perPage
-                ),
-                total: items.length,
-                page: pagination.page,
-                perPage: pagination.perPage === 0 ? items.length : Math.min(items.length, pagination.perPage)
-            }
-        },
+//         update(collection, id, data) {
+//             if (!db[collection]) {
+//                 return null;
+//             }
+//             const index = db[collection].findIndex(item => item.id === id);
+//             if (index !== -1) {
+//                 db[collection][index] = { ...db[collection][index], ...data };
+//                 return db[collection][index];
+//             }
+//             return null;
+//         },
 
-        update(collection, id, data) {
-            if (!db[collection]) {
-                return null;
-            }
-            const index = db[collection].findIndex(item => item.id === id);
-            if (index !== -1) {
-                db[collection][index] = { ...db[collection][index], ...data };
-                return db[collection][index];
-            }
-            return null;
-        },
-
-        remove(collection, id) {
-            if (!db[collection]) {
-                return null;
-            }
-            const index = db[collection].findIndex(item => item.id === id);
-            if (index !== -1) {
-                const deleted = db[collection][index];
-                db[collection].splice(index, 1);
-                return deleted;
-            }
-            return null;
-        }
-    }
-}
+//         remove(collection, id) {
+//             if (!db[collection]) {
+//                 return null;
+//             }
+//             const index = db[collection].findIndex(item => item.id === id);
+//             if (index !== -1) {
+//                 const deleted = db[collection][index];
+//                 db[collection].splice(index, 1);
+//                 return deleted;
+//             }
+//             return null;
+//         }
+//     }
+// }
 
 export const createAdapter = (token) => {
     if(!existsSync('./data/' + token + '/db.json')) {
