@@ -1,5 +1,9 @@
 import express from 'express'
-import { createAdapter, createDb, getId } from './db.js'
+import { createDb } from './db.js'
+import {getId} from './helpers.js'
+
+import {createAdapter} from './adapters/file.js'
+
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 
 const app = express()
