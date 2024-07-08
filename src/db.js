@@ -1,10 +1,9 @@
-import { getId } from './helpers.js';
+import { getId } from '#src/helpers';
 
 export function createDb(adapter) {
 	return (collectionName) => {
 		return {
-			query({filters = [], page = 1, perPage= 0} = {}) {
-                
+			async query({filters = [], page = 1, perPage= 0} = {}) {
                 return adapter.query(collectionName, {
                     filters, 
                     pagination: {page, perPage}

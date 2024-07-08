@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { existsSync } from 'node:fs';
 
-export default createAdapter = (token) => {
+export default (token) => {
     if(!existsSync('./data/' + token + '/db.json')) {
         throw new Error('database not esists. create new database first (/new)')
     }

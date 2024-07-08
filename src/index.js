@@ -1,8 +1,8 @@
 import express from 'express'
-import { createDb } from './db.js'
-import {getId} from './helpers.js'
+import { createDb } from '#src/db'
+import {getId} from '#src/helpers'
 
-import {createAdapter} from './adapters/file.js'
+import createAdapter from '#src/adapters/file'
 
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 
@@ -30,24 +30,24 @@ app.post('/:token/:table/query', (req, res) => {
     return res.json(result)
 })
 
-app.post('/:token/:table/insert', (req, res) => {
+app.post('/:token/:table/insert', async (req, res) => {
     // validate token
     const {token, table} = req.params
     const data = req.body
     const db = createDb(createAdapter(token))
 
-    const result = db(table).insert(data)
+    const result = await db(table).insert(data)
     
     return res.json(result)
 })
 
-app.post('/:token/:table/update', (req, res) => {
+app.post('/:token/:table/update', async (req, res) => {
     // validate token
     const {token, table} = req.params
     const data = req.body
     const db = createDb(createAdapter(token))
 
-    const result = db(table).update(data.id, data)
+    const result = await db(table).update(data.id, data)
     
     return res.json(result)
 })

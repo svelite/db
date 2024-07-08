@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "imports": {
+    "#src/*": "./src/*.js"
+  },
   "scripts": {
     "start": "node index.js"
   },
